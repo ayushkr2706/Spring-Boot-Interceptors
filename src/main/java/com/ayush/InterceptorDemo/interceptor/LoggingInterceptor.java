@@ -46,32 +46,23 @@ public class LoggingInterceptor implements HandlerInterceptor {
         System.out.println("Client IP : " + request.getRemoteAddr());
         System.out.println("Authorization Header : " + request.getHeader("Authorization"));
 
-
-        String apiKey = request.getHeader("Authorization");
-        if(apiKey == null || !apiKey.equals("12345")){
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            response.getWriter().write("Invalid api key");
-            System.out.println("Response status : " + response.getStatus());
-            return false;
-        }
-
         if(handler instanceof HandlerMethod handlerMethod){
             System.out.println("Controller : " + handlerMethod.getBeanType().getName());
             System.out.println("Controller method : " + handlerMethod.getMethod().getName());
         }
-        System.out.println("Response status : " + response.getStatus());
         return true;
 
     }
 
-//    @Override
-//    public void postHandle(HttpServletRequest request,
-//                           HttpServletResponse response,
-//                           Object handler,
-//                           ModelAndView modelAndView){
-//
-//        System.out.println("postHandle called");
-//    }
+    @Override
+    public void postHandle(HttpServletRequest request,
+                           HttpServletResponse response,
+                           Object handler,
+                           ModelAndView modelAndView){
+
+        System.out.println("postHandle called");
+        System.out.println("Response status : " + response.getStatus());
+    }
 
     @Override
     public void afterCompletion(HttpServletRequest request,
